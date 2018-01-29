@@ -6,7 +6,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 	if(isset($_GET['reset'])){
 		session_destroy();
 	}
-	
+
 	define("APP_ID", '253776274791852');
 	define("APP_SECRET",'36689be189970bdbcb7db0190f9edbab');
 	//define("PAGE_ID",'elnuevodia');
@@ -17,7 +17,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 		  'default_graph_version' => 'v2.10',
 		  //'default_access_token' => '{access-token}', // optional
 	]);
-		
+
 	$helper = $fb->getRedirectLoginHelper();
 
 	if(!isset($_SESSION['fb_access_token'])){
@@ -29,24 +29,24 @@ require_once __DIR__ . '/vendor/autoload.php';
 				exit;
 			}
 	}
-	
-	
+
+
 	if(isset($_SESSION['fb_access_token'])){
 		echo($_SESSION['fb_access_token']); exit;
 	}
-	
-	
+
+
 	$accessToken="";
 	try {
 			$accessToken = $helper->getAccessToken();
-			
+
 		} catch(Facebook\Exceptions\FacebookResponseException $e) {
 			$_SESSION['error']= array('error'=>true,'message'=>$e->getMessage());
 		} catch(Facebook\Exceptions\FacebookSDKException $e) {
 		// When validation fails or other local issues
 			$_SESSION['error']= array('error'=>true,'message'=>$e->getMessage());
 		}
-		
+
 		/*
 		if (! isset($accessToken)) {
 			if ($helper->getError()) {
@@ -55,7 +55,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 			} else {
 			header('HTTP/1.0 400 Bad Request');
 			echo 'could not connect to facebook';
-			}			
+			}
 		}
 		*/
 		try{
@@ -86,5 +86,5 @@ require_once __DIR__ . '/vendor/autoload.php';
 		}catch(Exception $e){
 			echo "error"; exit;
 		}
-		
+
 ?>
