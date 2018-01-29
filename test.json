@@ -1,0 +1,47 @@
+{
+  "id": "127398697380356",
+  "app_links": {
+    "android": [
+      {
+        "app_name": "Facebook",
+        "package": "com.facebook.katana",
+        "url": "fb://page/127398697380356?referrer=app_link"
+      }
+    ],
+    "ios": [
+      {
+        "app_name": "Facebook",
+        "app_store_id": "284882215",
+        "url": "fb://page/?id=127398697380356"
+      }
+    ]
+  },
+  "can_checkin": true,
+  "can_post": true,
+  "category": "School",
+  "checkins": 0,
+  "cover": {
+    "cover_id": "182510065202552",
+    "offset_x": 0,
+    "offset_y": 37,
+    "source": "https://scontent.xx.fbcdn.net/v/t31.0-8/s720x720/479052_182510065202552_1201321865_o.jpg?oh=72b1658ffa42e26323ead8ab55807b42&oe=5ADD134A",
+    "id": "182510065202552"
+  },
+  "description": "Starryville nursery and primary school was established on the 9th of October, 1996 by an experienced educationist.\n\nIts is located in a safe, quiet and serene neighbourhood in the center of Ifako-Ijaiye in Lagos state at Joseph Campbell Avenue, Alex Kehinde Taylor Estate.\n\nIt is an exclusive, well equipped, result-oriented school that adopts a pragmatic approach to learning. We have qualified, dedicated and disciplined teachers. Our classrooooms are spacious, well ventilated with comfortable furniture and a maximum of 20students/class.\n\nWe make use of modern instructional aids as welll as modified montessori method for teaching. Our students are also involved in extra-curricular activities such as music, arts, swimming, ballet dancing, etc.\n\nOur playground is safe, and ample toys are available for leisure and recreation",
+  "display_subtext": "12 Joseph Campbell avenue, Alex Kehinde Taylor Estate・Ifako, Lagos, Nigeria",
+  "displayed_message_response_time": "AUTOMATIC",
+  "emails": [
+    "starryvilleschool@yahoo.com"
+  ],
+  "is_community_page": false,
+  "is_published": true,
+  "is_unclaimed": false,
+  "link": "https://www.facebook.com/Starryville-School-127398697380356/",
+  "location": {
+    "city": "Ifako",
+    "country": "Nigeria",
+    "street": "12 Joseph Campbell avenue, Alex Kehinde Taylor Estate"
+  },
+  "name": "Starryville School",
+  "verification_status": "not_verified"
+}

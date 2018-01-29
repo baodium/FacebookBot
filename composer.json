@@ -1,0 +1,8 @@
+{
+    "name": "ayodele/facebook",
+    "description": "facebook page crawler",
+    "type": "project",
+    "require": {
+        "facebook/graph-sdk": "^5.0"
+    }
+}
