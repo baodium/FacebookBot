@@ -127,7 +127,7 @@ if(isNaN(id)){
 }
 $("#lists").html("<center><img src='preloader.gif' /></center>");
 	$.ajax({
-		    url: 'http://localhost/waleapp/test.php',
+		    url: 'http://localhost/FacebookBot/test.php',
 			method:'GET',
 			success: function(response){
 				//if(){
@@ -140,6 +140,8 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 				var page_id=id;//'127398697380356';
 				var feedQuery = 'https://graph.facebook.com/'+id+'/feed';
 				var feedURL = feedQuery +'?access_token='+ accessToken +'';
+
+
 				$.ajax({
 						url: 'https://graph.facebook.com/'+id+'?access_token='+ accessToken+'&fields=id,about,app_links,artists_we_like,best_page,can_checkin,can_post,category,category_list,checkins,company_overview,contact_address,country_page_likes,cover,current_location,description,display_subtext,displayed_message_response_time,emails,general_info,is_community_page,is_eligible_for_branded_content,is_published,is_unclaimed,link,location,members,name,new_like_count,parent_page,personal_info,personal_interests,username,verification_status,website',
 						method:'GET',
@@ -151,6 +153,8 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 							$("#lists").html("");
 						}
 				});
+
+
 				$.ajax({
 						url: feedQuery +'?access_token='+ accessToken +'',
 						method:'GET',
@@ -161,19 +165,27 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 								var d = data.data; for( i=0; i < d.length; i++) {
 									d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
 								}
+
 						},
 						error:function(e){
 								$("#lists").html("<center>Page not found</center>");
 						}
 				});
+
+
 		    }
     });
+
+
+
 }
+
 $('#crawler-form').submit( function(e) {
 console.log("clicked");
 	CrawlIt();
 	return false;
 });
+
 </script>
 
 
