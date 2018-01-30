@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$redirect_url = 'http://localhost/FacebookBot/test.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
 	if(isset($_GET['reset'])){
@@ -22,7 +22,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 	if(!isset($_SESSION['fb_access_token'])){
 			$_SESSION['request'] = "true";
-			$loginUrl=$helper->getLoginUrl("http://localhost/waleapp/test.php");
+			$loginUrl=$helper->getLoginUrl($redirect_url);
 			//header('Location: ' .$loginUrl);
 			if(!isset($_GET['code'])){
 				echo $loginUrl;
@@ -80,7 +80,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 				}
 
 			$_SESSION['fb_access_token'] = (string) $accessToken;
-			header('Location: http://localhost/waleapp/');
+			header('Location: http://localhost/FacebookBot/home.php/');
 			exit;
 			//echo ($_SESSION['fb_access_token']); exit;
 		}catch(Exception $e){

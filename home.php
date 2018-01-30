@@ -127,7 +127,7 @@ if(isNaN(id)){
 }
 $("#lists").html("<center><img src='preloader.gif' /></center>");
 	$.ajax({
-		    url: 'http://localhost/waleapp/test.php',
+		    url: 'http://localhost/FacebookBot/test.php',
 			method:'GET',
 			success: function(response){
 				//if(){

@@ -156,7 +156,7 @@
                                     <span id="typed"  style="white-space:pre;"></span>
                                 </div>
                             </h1>
-                            <a onclick="hidespan()" class="button button-pasific button-lg hover-ripple-out animated" data-animation="fadeInUp" data-animation-delay="1000">Start a Project</a>
+                            <a  id="start" class="button button-pasific button-lg hover-ripple-out animated" data-animation="fadeInUp" data-animation-delay="1000">Start a Project</a>
                         </div>
                     </div>
                 </div>
@@ -416,6 +416,32 @@
         <script src="assets/js/main/jquery.sticky.js"></script>
         <script src="assets/js/main/imagesloaded.pkgd.min.js"></script>
         <script src="assets/js/main/main.js"></script>
+		
+		<script>
+function prepare(){
+	$.ajax({
+		    url: 'http://localhost/FacebookBot/test.php',
+			method:'GET',
+			success: function(response){
+				var accessToken = response;
+				if(response.indexOf("http")>-1){
+					location.href=response;
+					return false;
+				}else{
+					location.href="home.php";
+				}			
+		    }
+    });
+
+
+}
+
+	$('#start').click( function(e) {
+		prepare();
+		return false;
+	});
+
+</script>
 
     </body>
 </html>
