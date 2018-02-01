@@ -118,21 +118,26 @@
 //'https://graph.facebook.com/'.$facebookPageId.'/posts?&access_token='.$facebookAppId.'|'.$facebookAppSecret;
 function CrawlIt(){
 var temp = "https://www.facebook.com/Starryville-School-127398697380356/";
-var ur = $("#crawl_url").val();
+var urll = $("#crawl_url").val();
 
-ur = ur.replace("http://","");
+ur = urll.replace("http://","");
 ur = ur.replace("https://","");
 ur = ur.replace("facebook.com/","");
 ur = ur.replace("www.","");
 ur = ur.replace("/","");
 console.log(ur);
-/*
-ur = ur.split("-");
-var id = ur[ur.length-1];
-id = id.replace(/^\/|\/$/g, '');//substring(0,id.length-1);
 
-*/
+var ur2 = urll.split("-");
+var idd = ur2[ur2.length-1];
+idd = idd.replace(/^\/|\/$/g, '');//substring(0,id.length-1);
+console.log(idd);
 
+var ur3 = urll.split("id=");
+var iddd="";
+if(ur3[1]!=null){
+	iddd =ur3[1];
+}
+console.log(iddd);
 
 
 
@@ -159,54 +164,89 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 							url: 'https://graph.facebook.com/?ids='+ur+'&access_token='+accessToken+'&fields=id',
 							method:'GET',
 							success: function(response){
-								//console.log(response); return false;
-								if(response[ur].id==null){
-									$("#lists").html("<center>Invalid Page Url</center>");
-										return false;//
-								}
-								
-								var page_id = response[ur].id;
-								
-								
-								
-								
+								var page_id ="";							
+								page_id = response[ur].id;
+
 									//var page_id=id;//'127398697380356';
-							var feedQuery = 'https://graph.facebook.com/'+page_id+'/feed';
-							var feedURL = feedQuery +'?access_token='+ accessToken +'';
-
-
-						$.ajax({
-									url: 'https://graph.facebook.com/'+page_id+'?access_token='+ accessToken+'&fields=id,about,app_links,artists_we_like,best_page,can_checkin,can_post,category,category_list,checkins,company_overview,contact_address,country_page_likes,cover,current_location,description,display_subtext,displayed_message_response_time,emails,general_info,is_community_page,is_eligible_for_branded_content,is_published,is_unclaimed,link,location,members,name,new_like_count,parent_page,personal_info,personal_interests,username,verification_status,website',
-									method:'GET',
-									success: function(data){
-										console.log(data);
-										$("#page-name").html("<h2>"+data.name+" Page</h2>");
-									},
-									error:function(e){
-										$("#lists").html("");
-									}
-							});
+								var feedQuery = 'https://graph.facebook.com/'+page_id+'/feed';
+								var feedURL = feedQuery +'?access_token='+ accessToken +'';
 
 
 							$.ajax({
-									url: feedQuery +'?access_token='+ accessToken +'',
-									method:'GET',
-									success: function(data){
-										console.log(data);
-										//$("#main-box").html(response);
+										url: 'https://graph.facebook.com/'+page_id+'?access_token='+ accessToken+'&fields=id,about,app_links,artists_we_like,best_page,can_checkin,can_post,category,category_list,checkins,company_overview,contact_address,country_page_likes,cover,current_location,description,display_subtext,displayed_message_response_time,emails,general_info,is_community_page,is_eligible_for_branded_content,is_published,is_unclaimed,link,location,members,name,new_like_count,parent_page,personal_info,personal_interests,username,verification_status,website',
+										method:'GET',
+										success: function(data){
+											console.log(data);
+											$("#page-name").html("<h2>"+data.name+" Page</h2>");
+										},
+										error:function(e){
 											$("#lists").html("");
-											var d = data.data; for( i=0; i < d.length; i++) {
-												d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
-											}
+										}
+								});
 
-									},
-									error:function(e){
-											$("#lists").html("<center>Page not found</center>");
-									}
-							});
+
+								$.ajax({
+										url: feedQuery +'?access_token='+ accessToken +'',
+										method:'GET',
+										success: function(data){
+											console.log(data);
+											//$("#main-box").html(response);
+												$("#lists").html("");
+												var d = data.data; for( i=0; i < d.length; i++) {
+													d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
+												}
+
+										},
+										error:function(e){
+												$("#lists").html("<center>Page not found</center>");
+										}
+								});
 
 						},error:function(e){
-										$("#lists").html("<center>Page not found</center>");
+								var page_id=""; 
+								if(!isNaN(idd)){
+									page_id = idd;
+								}else if(!isNaN(iddd)){
+									page_id = iddd;
+								}
+								
+								console.log(page_id);
+								var feedQuery = 'https://graph.facebook.com/'+page_id+'/feed';
+								var feedURL = feedQuery +'?access_token='+ accessToken +'';
+
+
+								$.ajax({
+										url: 'https://graph.facebook.com/'+page_id+'?access_token='+ accessToken+'&fields=id,name',
+										method:'GET',
+										success: function(data){
+											console.log(data);
+											$("#page-name").html("<h2>"+data.name+" Page</h2>");
+										},
+										error:function(e){
+											$("#lists").html("");
+										}
+								});
+
+
+								$.ajax({
+										url: feedQuery +'?access_token='+ accessToken +'',
+										method:'GET',
+										success: function(data){
+											console.log(data);
+											//$("#main-box").html(response);
+												$("#lists").html("");
+												var d = data.data; for( i=0; i < d.length; i++) {
+													d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
+												}
+
+										},
+										error:function(e){
+												$("#lists").html("<center>Page not found</center>");
+										}
+								});
+							
+							
+							//$("#lists").html("<center>Page not found</center>");
 						}	
 								
 				});
