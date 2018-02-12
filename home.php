@@ -96,12 +96,23 @@
                 </form>
             </div>
 			<div id="page-name"></div>
-			<div class="twelve wide field main-fields">
-							<ul id="lists">
+			
+			<div class="fields ">
+				<div class="three wide field main-fields">
+				<table>
+				<tr id="extra"></tr>
+				</table>
+								
+							 
+				</div>			
+				<div class="three wide field main-fields">
+								<ul id="lists">
 
-							</ul>
+								</ul>
 
-            </div>
+				</div>
+				
+			</div>
 
         </div>
 
@@ -141,7 +152,7 @@ console.log(iddd);
 
 
 
-
+$("#extra").html("");
 if(ur==""){
 	$("#lists").html("<center>Invalid Page Url</center>");
 	return false;//
@@ -153,6 +164,7 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 			method:'GET',
 			success: function(response){
 				var accessToken = response;
+				console.log(accessToken);
 				if(response.indexOf("http")>-1){
 					location.href=response;
 					return false;
@@ -166,7 +178,7 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 							success: function(response){
 								var page_id ="";							
 								page_id = response[ur].id;
-
+								
 									//var page_id=id;//'127398697380356';
 								var feedQuery = 'https://graph.facebook.com/'+page_id+'/feed';
 								var feedURL = feedQuery +'?access_token='+ accessToken +'';
@@ -178,6 +190,8 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 										success: function(data){
 											console.log(data);
 											$("#page-name").html("<h2>"+data.name+" Page</h2>");
+											get_total_likes(accessToken,page_id);
+											save_data(page_id,"detail",data);
 										},
 										error:function(e){
 											$("#lists").html("");
@@ -195,6 +209,8 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 												var d = data.data; for( i=0; i < d.length; i++) {
 													d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
 												}
+												
+												save_data(page_id,"posts",data);
 
 										},
 										error:function(e){
@@ -216,11 +232,12 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 
 
 								$.ajax({
-										url: 'https://graph.facebook.com/'+page_id+'?access_token='+ accessToken+'&fields=id,name',
+										url: 'https://graph.facebook.com/'+page_id+'?access_token='+ accessToken+'&fields=id,about,app_links,artists_we_like,best_page,can_checkin,can_post,category,category_list,checkins,company_overview,contact_address,country_page_likes,cover,current_location,description,display_subtext,displayed_message_response_time,emails,general_info,is_community_page,is_eligible_for_branded_content,is_published,is_unclaimed,link,location,members,name,new_like_count,parent_page,personal_info,personal_interests,username,verification_status,website',
 										method:'GET',
 										success: function(data){
 											console.log(data);
 											$("#page-name").html("<h2>"+data.name+" Page</h2>");
+											save_data(page_id,"detail",data);
 										},
 										error:function(e){
 											$("#lists").html("");
@@ -238,6 +255,8 @@ $("#lists").html("<center><img src='preloader.gif' /></center>");
 												var d = data.data; for( i=0; i < d.length; i++) {
 													d[i].message ? $("#lists").append('<li>'+ d[i].message +'&nbsp;<span style="color:blue"><i>'+ d[i].created_time+'</i></span><br/><br/></li>') : ''; // lots of other stuff, you got it
 												}
+												
+												save_data(page_id,"posts",data);
 
 										},
 										error:function(e){
@@ -265,6 +284,48 @@ console.log("clicked");
 	return false;
 });
 
+
+function get_total_likes(accessToken,page_id){
+	var feedQuery = 'https://graph.facebook.com/'+page_id+'/likes';
+
+	$.ajax({
+			url: feedQuery +'?access_token='+ accessToken +'',
+			method:'GET',
+			success: function(data){
+			console.log(data);
+				
+				var d = data.data; 
+				
+				$("#extra").append("<td>No of likes:"+d.length+"</td>");
+				$("#extra").append("<td>Likers:");
+				for( i=0; i < d.length; i++) {
+					d[i].name ? $("#extra").append(d[i].name +'&nbsp;:<span style="color:blue"><i>'+ d[i].id+'</i></span><br/>') : ''; // lots of other stuff, you got it
+				}
+				$("#extra").append("</td>");
+				save_data(page_id,"likes",data);
+			},
+			error:function(e){
+				
+				}
+	});
+}
+
+
+//save result into php file that converts to json and store locally
+function save_data(page_id,edge,data){
+		$.ajax({
+			url:'http://localhost/FacebookBot/saver.php',
+			method:'POST',
+			data:{page_id:page_id,edge:edge,data:data},
+			success: function(response){
+				console.log(response);
+
+			},
+			error:function(e){
+				console.log(e);
+			}
+	});
+}
 </script>
 
 
